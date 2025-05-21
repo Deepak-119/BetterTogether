@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 const Donate = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -8,7 +10,54 @@ const Donate = () => {
 
   const handleCheckout = async (e) => {
     e.preventDefault();
-  }
+
+    if (!amount || amount <= 0) {
+      alert("Please enter a valid donation amount.");
+      return;
+    }
+
+    setDisableBtn(true);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:4000/api/v1/payment/checkout",
+        { amount: amount },
+        { withCredentials: true }
+      );
+
+      const options = {
+        key: "rzp_test_1ndsPffNFAzqiV", // 🔁 Replace with your actual Razorpay Key ID
+        amount: data.order.amount,
+        currency: data.order.currency,
+        name: "Poors Donation",
+        description: message || "Thank you for your support!",
+        order_id: data.order.id,
+        handler: function (response) {
+          alert("Payment Successful!");
+          console.log("Payment ID:", response.razorpay_payment_id);
+        },
+        prefill: {
+          name,
+          email,
+          contact: 9999999999, // Optional: Replace with real contact input if you collect it
+        },
+        notes: {
+          message,
+        },
+        theme: {
+          color: "#0a66c2",
+        },
+      };
+
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (error) {
+      console.error("Payment Error:", error);
+      alert("Something went wrong! Try again.");
+    } finally {
+      setDisableBtn(false);
+    }
+  };
+
   return (
     <section className="donate">
       <form onSubmit={handleCheckout}>
@@ -21,17 +70,17 @@ const Donate = () => {
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            placeholder="Enter Donation Amount (USD)"
+            placeholder="Enter Donation Amount (INR)"
           />
         </div>
         <input
-          type="email"
+          type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Your Name"
         />
         <input
-          type="text"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email Address"
@@ -43,7 +92,7 @@ const Donate = () => {
           onChange={(e) => setMessage(e.target.value)}
         />
         <button type="submit" className="btn" disabled={disableBtn}>
-          Donate {amount ? `$${amount}` : "$0"}
+          Donate {amount ? `₹${amount}` : "₹0"}
         </button>
       </form>
     </section>
