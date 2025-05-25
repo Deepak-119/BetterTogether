@@ -4,7 +4,8 @@ import cors from "cors";
 import { dbConnection } from "./database/dbConnection.js";
 import messageRouter from "./router/messageRouter.js";
 import Razorpay from "razorpay";
-import paymentRouter from "./router/paymentRouter.js";
+import paymentRouter from "./router/PaymentRouter.js";
+
 
 
 const app = express();
