@@ -43,41 +43,42 @@ const Footer = () => {
         <ul>
           <li>
             <Link to={"/"}>
-              {" "}
               <span>
                 <FaSquareTwitter />
-              </span>{" "}
-              <span>Twitter (X)</span>{" "}
+              </span>
+              <span>Twitter (X)</span>
             </Link>
           </li>
           <li>
             <Link to={"/"}>
-              {" "}
               <span>
                 <FaYoutube />
-              </span>{" "}
-              <span>Youtube</span>{" "}
+              </span>
+              <span>Youtube</span>
             </Link>
           </li>
           <li>
             <Link to={"/"}>
-              {" "}
               <span>
                 <FaSquareInstagram />
-              </span>{" "}
-              <span>Instagram</span>{" "}
+              </span>
+              <span>Instagram</span>
             </Link>
           </li>
           <li>
             <Link to={"/"}>
-              {" "}
               <span>
                 <FaLinkedin />
-              </span>{" "}
-              <span>Linkedin</span>{" "}
+              </span>
+              <span>Linkedin</span>
             </Link>
           </li>
         </ul>
+      </div>
+
+      {/* Footer Bottom Line */}
+      <div style={{ color:"white", textAlign: "center", marginTop: "2rem", width: "100%" }}>
+        <p>© {new Date().getFullYear()} Designed and Developed by Deepak Kumar</p>
       </div>
     </footer>
   );

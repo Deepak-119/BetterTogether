@@ -19,13 +19,13 @@ const Donate = () => {
     setDisableBtn(true);
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/payment/checkout",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/payment/checkout`,
         { amount: amount },
         { withCredentials: true }
       );
 
       const options = {
-        key: "rzp_test_1ndsPffNFAzqiV", // 🔁 Replace with your actual Razorpay Key ID
+        key: "rzp_test_1ndsPffNFAzqiV",
         amount: data.order.amount,
         currency: data.order.currency,
         name: "Poors Donation",
@@ -38,7 +38,7 @@ const Donate = () => {
         prefill: {
           name,
           email,
-          contact: 9999999999, // Optional: Replace with real contact input if you collect it
+          contact: 9999999999,
         },
         notes: {
           message,
